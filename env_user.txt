@@ -1,1 +1,1 @@
-﻿C:\Users\Avisha\AppData\Local\Microsoft\WindowsApps;C:\Users\Avisha\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\nodejs;C:\Program Files\Java\jdk-17\bin;C:\Users\Avisha\AppData\Local\Android\Sdk\platform-tools;C:\Users\Avisha\AppData\Local\Android\Sdk;C:\Users\Avisha\AppData\Local\Android\Sdk\platform-tools\emulator;C:\Users\Avisha\AppData\Roaming\npm;C:\Users\Avisha\AppData\Local\Programs\Antigravity\bin
+
