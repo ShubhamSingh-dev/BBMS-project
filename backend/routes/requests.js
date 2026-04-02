@@ -7,6 +7,7 @@ import {
   allocateBloodUnits,
   getRequestsByStatus,
   cancelRequest,
+  getMyRequests,
 } from '../controllers/requestController.js';
 import { protect, authorize } from '../middleware/auth.js';
 
@@ -25,6 +26,10 @@ router.get('/', protect, getAllRequests);
 // @route   POST /api/requests
 // @desc    Create blood request
 router.post('/', protect, createRequest);
+
+// @route   GET /api/requests/my
+// @desc    Get donor's own requests
+router.get('/my', protect, getMyRequests);
 
 // @route   GET /api/requests/:id
 // @desc    Get single request

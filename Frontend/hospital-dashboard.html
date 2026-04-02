@@ -443,9 +443,9 @@
                 <div class="hospital-badge"><i class="fas fa-building"></i> Main Branch • Reg ID: HOS-00123</div>
             </div>
             <div class="header-stats">
-                <div class="header-stat"><i class="fas fa-tint"></i><div><span class="header-stat-value">116</span><div class="header-stat-label">Total Units</div></div></div>
-                <div class="header-stat"><i class="fas fa-clock"></i><div><span class="header-stat-value">5</span><div class="header-stat-label">Pending Requests</div></div></div>
-                <div class="header-stat"><i class="fas fa-calendar-exclamation"></i><div><span class="header-stat-value">2</span><div class="header-stat-label">Expiring Soon</div></div></div>
+                <div class="header-stat"><i class="fas fa-tint"></i><div><span class="header-stat-value" id="stat-available">116</span><div class="header-stat-label">Total Units</div></div></div>
+                <div class="header-stat"><i class="fas fa-clock"></i><div><span class="header-stat-value" id="stat-requested">5</span><div class="header-stat-label">Pending Requests</div></div></div>
+                <div class="header-stat"><i class="fas fa-calendar-exclamation"></i><div><span class="header-stat-value" id="stat-received">2</span><div class="header-stat-label">Expiring Soon</div></div></div>
                 <div class="header-stat"><i class="fas fa-hand-holding-heart"></i><div><span class="header-stat-value">342</span><div class="header-stat-label">Active Donors</div></div></div>
             </div>
         </div>
@@ -474,15 +474,8 @@
                 <div class="data-table">
                     <table>
                         <thead><tr><th>Blood Type</th><th>Units</th><th>Status</th><th>Trend</th><th>Last Updated</th></tr></thead>
-                        <tbody>
-                            <tr><td>A+</td><td>42 units</td><td><span class="status-badge status-available">Available</span></td><td><i class="fas fa-arrow-up"></i> +5</td><td>Today, 9:00 AM</td></tr>
-                            <tr><td>O-</td><td>15 units</td><td><span class="status-badge status-moderate">Moderate</span></td><td><i class="fas fa-arrow-down"></i> -2</td><td>Today, 9:00 AM</td></tr>
-                            <tr><td>B+</td><td>30 units</td><td><span class="status-badge status-moderate">Moderate</span></td><td><i class="fas fa-chart-line"></i> Stable</td><td>Today, 9:00 AM</td></tr>
-                            <tr><td>AB+</td><td>22 units</td><td><span class="status-badge status-moderate">Moderate</span></td><td><i class="fas fa-arrow-up"></i> +3</td><td>Today, 9:00 AM</td></tr>
-                            <tr><td>A-</td><td>12 units</td><td><span class="status-badge status-low">Low</span></td><td><i class="fas fa-arrow-down"></i> -1</td><td>Today, 9:00 AM</td></tr>
-                            <tr><td>O+</td><td>48 units</td><td><span class="status-badge status-available">Available</span></td><td><i class="fas fa-arrow-up"></i> +8</td><td>Today, 9:00 AM</td></tr>
-                            <tr><td>B-</td><td>10 units</td><td><span class="status-badge status-low">Low</span></td><td><i class="fas fa-arrow-down"></i> -3</td><td>Today, 9:00 AM</td></tr>
-                            <tr><td>AB-</td><td>8 units</td><td><span class="status-badge status-low">Critical</span></td><td><i class="fas fa-arrow-down"></i> -2</td><td>Today, 9:00 AM</td></tr>
+                        <tbody id="hospitalStockBody">
+                            <tr><td colspan="5" style="text-align: center; padding: 20px;">Loading inventory data...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -536,12 +529,8 @@
                 <div class="data-table">
                     <table>
                         <thead><tr><th>Request ID</th><th>Patient Name</th><th>Blood Type</th><th>Quantity</th><th>Urgency</th><th>Requested</th><th>Status</th><th>Actions</th></tr></thead>
-                        <tbody>
-                            <tr><td>REQ-001</td><td>Alice Williams</td><td>A+</td><td>2 units</td><td><span class="status-badge status-urgent">Urgent</span></td><td>10:30 AM</td><td><span class="status-badge status-pending">Pending</span></td><td><button class="action-btn" onclick="processRequest('REQ-001')">Process</button></td></tr>
-                            <tr><td>REQ-002</td><td>Bob Miller</td><td>O-</td><td>3 units</td><td><span class="status-badge status-critical">Critical</span></td><td>9:45 AM</td><td><span class="status-badge status-matched">Matched</span></td><td><button class="action-btn" onclick="processRequest('REQ-002')">Dispatch</button></td></tr>
-                            <tr><td>REQ-003</td><td>Charlie Davis</td><td>B+</td><td>1 unit</td><td><span class="status-badge status-urgent">Urgent</span></td><td>Yesterday</td><td><span class="status-badge status-pending">Pending</span></td><td><button class="action-btn" onclick="processRequest('REQ-003')">Process</button></td></tr>
-                            <tr><td>REQ-004</td><td>Diana Garcia</td><td>AB+</td><td>2 units</td><td><span class="status-badge status-urgent">Urgent</span></td><td>Yesterday</td><td><span class="status-badge status-pending">Pending</span></td><td><button class="action-btn" onclick="processRequest('REQ-004')">Process</button></td></tr>
-                            <tr><td>REQ-005</td><td>Edward Wilson</td><td>A+</td><td>4 units</td><td><span class="status-badge status-critical">Critical</span></td><td>Mar 20</td><td><span class="status-badge status-matched">Matched</span></td><td><button class="action-btn" onclick="processRequest('REQ-005')">Dispatch</button></td></tr>
+                        <tbody id="hospitalRequestsBody">
+                            <tr><td colspan="8" style="text-align: center; padding: 20px;">Loading hospital requests...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -743,5 +732,6 @@
         window.addEventListener('click', (e) => { const modal = document.getElementById('emergencyModal'); if(e.target === modal) hideEmergencyModal(); });
         window.addEventListener('load', updateCharts);
     </script>
+    <script src="scripts.js"></script>
 </body>
 </html>

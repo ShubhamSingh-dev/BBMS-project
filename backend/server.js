@@ -9,6 +9,7 @@ import morgan from 'morgan';
 
 import authRoutes from './routes/auth.js';
 import donorRoutes from './routes/donors.js';
+import donationRoutes from './routes/donations.js';
 import inventoryRoutes from './routes/inventory.js';
 import requestRoutes from './routes/requests.js';
 import bloodbankRoutes from './routes/bloodbank.js';
@@ -42,10 +43,14 @@ connectDB();
 // ==================== ROUTES ====================
 app.use('/api/auth', authRoutes);
 app.use('/api/donors', donorRoutes);
+app.use('/api/donations', donationRoutes);
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/requests', requestRoutes);
 app.use('/api/bloodbank', bloodbankRoutes);
 app.use('/api/reports', reportRoutes);
+
+// Alias for admin stats to match frontend
+app.use('/api/admin/stats', bloodbankRoutes);
 
 // ==================== ROOT ROUTE ====================
 app.get('/', (req, res) => {
@@ -56,10 +61,12 @@ app.get('/', (req, res) => {
     endpoints: {
       auth: '/api/auth',
       donors: '/api/donors',
+      donations: '/api/donations',
       inventory: '/api/inventory',
       requests: '/api/requests',
       bloodbank: '/api/bloodbank',
       reports: '/api/reports',
+      adminStats: '/api/admin/stats',
     },
   });
 });

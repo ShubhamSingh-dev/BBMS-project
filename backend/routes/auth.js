@@ -27,7 +27,7 @@ router.get('/me', protect, async (req, res) => {
 router.post(
   '/register',
   [
-    check('name', 'Name is required').notEmpty(),
+    check('fullname', 'Full Name is required').notEmpty(),
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Password must be at least 6 characters').isLength({ min: 6 }),
     check('phone', 'Phone is required').notEmpty(),
@@ -38,7 +38,7 @@ router.post(
       return res.status(400).json({ success: false, errors: errors.array() });
     }
 
-    const { name, email, password, phone, role } = req.body;
+    const { fullname, email, password, phone, role } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -46,7 +46,20 @@ router.post(
         return res.status(400).json({ success: false, message: 'User already exists' });
       }
 
-      user = new User({ name, email, password, phone, role: role || 'donor' });
+      const roleMap = {
+        donor: 'donor',
+        patient: 'recipient',
+        hospital: 'staff',
+        admin: 'admin',
+      };
+
+      user = new User({
+        name: fullname || name,
+        email,
+        password,
+        phone,
+        role: roleMap[role] || 'donor',
+      });
       await user.save();
 
       const token = user.getSignedJwt();
@@ -93,7 +106,16 @@ router.post(
       }
 
       const token = user.getSignedJwt();
-      res.json({ success: true, token });
+      res.json({
+        success: true,
+        token,
+        user: {
+          id: user._id,
+          fullname: user.name,
+          email: user.email,
+          role: user.role,
+        },
+      });
     } catch (err) {
       console.error(err.message);
       res.status(500).json({ success: false, message: 'Server Error' });

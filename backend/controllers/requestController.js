@@ -312,6 +312,27 @@ export const getRequestsByStatus = async (req, res) => {
   }
 };
 
+// @desc    Get donor's own requests
+// @route   GET /api/requests/my
+// @access  Private
+export const getMyRequests = async (req, res) => {
+  try {
+    const requests = await BloodRequest.find({ requesterId: req.user.id }).sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: requests.length,
+      requests,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching your requests',
+      error: error.message,
+    });
+  }
+};
+
 // @desc    Cancel request
 // @route   DELETE /api/requests/:id
 // @access  Private

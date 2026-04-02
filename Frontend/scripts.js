@@ -40,11 +40,16 @@ async function apiFetch(endpoint, method = 'GET', body = null, requireAuth = tru
 
   try {
     const res = await fetch(`${API_BASE}${endpoint}`, options);
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'Something went wrong');
+    const text = await res.text();
+    const data = text ? JSON.parse(text) : {};
+    if (!res.ok) {
+      const message = data?.message || data?.error || data?.errors?.[0]?.msg || res.statusText || 'Something went wrong';
+      throw new Error(message);
+    }
     return data;
   } catch (err) {
-    throw err;
+    const message = err.message || 'Network error';
+    throw new Error(message);
   }
 }
 
@@ -95,9 +100,8 @@ if (loginForm) {
 
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
-    const role = document.getElementById('role').value;
 
-    if (!email || !password || !role) {
+    if (!email || !password) {
       showToast('Please fill in all fields.', 'error');
       return;
     }
@@ -107,7 +111,7 @@ if (loginForm) {
     btn.disabled = true;
 
     try {
-      const data = await apiFetch('/auth/login', 'POST', { email, password, role }, false);
+      const data = await apiFetch('/auth/login', 'POST', { email, password }, false);
       setToken(data.token);
       setUser(data.user);
 
@@ -116,8 +120,8 @@ if (loginForm) {
       setTimeout(() => {
         const redirectMap = {
           donor: 'donor-dashboard.html',
-          patient: 'patient-dashboard.html',
-          hospital: 'hospital-dashboard.html',
+          recipient: 'patient-dashboard.html',
+          staff: 'hospital-dashboard.html',
           admin: 'admin-dashboard.html',
         };
         window.location.href = redirectMap[data.user.role] || 'index.html';

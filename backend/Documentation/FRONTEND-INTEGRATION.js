@@ -107,12 +107,12 @@ export const authService = {
       method: 'POST',
       body: JSON.stringify(userData),
     });
-    
+
     if (response.token) {
       localStorage.setItem('token', response.token);
       localStorage.setItem('user', JSON.stringify(response.user));
     }
-    
+
     return response;
   },
 
@@ -122,12 +122,12 @@ export const authService = {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     });
-    
+
     if (response.token) {
       localStorage.setItem('token', response.token);
       localStorage.setItem('user', JSON.stringify(response.user));
     }
-    
+
     return response;
   },
 
@@ -402,78 +402,74 @@ export const reportService = {
   },
 };
 
-// ==================== Example HTML Implementation ====================
-/*
+// ==================== Example HTML Implementation ===================
 
-<!-- login.html -->
+// <!-- login.html -->
 <form id="loginForm">
   <input type="email" id="email" placeholder="Email" required>
-  <input type="password" id="password" placeholder="Password" required>
-  <button type="submit">Login</button>
-</form>
+    <input type="password" id="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
 
-<script type="module">
-  import { authService } from './js/auth-service.js';
+    <script type="module">
+      import {authService} from './js/auth-service.js';
 
   document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    
-    try {
+        e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
       const response = await authService.login(email, password);
       if (response.success) {
         alert('Login successful!');
-        window.location.href = '/dashboard.html';
+      window.location.href = '/dashboard.html';
       }
     } catch (error) {
-      alert('Login failed: ' + error.message);
+        alert('Login failed: ' + error.message);
     }
   });
-</script>
+    </script>
 
-<!-- donors.html -->
-<table id="donorsTable">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Blood Type</th>
-      <th>Donations</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+    {/* <!-- donors.html --> */}
+    <table id="donorsTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Blood Type</th>
+          <th>Donations</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-<script type="module">
-  import { donorService } from './js/donor-service.js';
+    <script type="module">
+      import {donorService} from './js/donor-service.js';
 
-  async function loadDonors() {
+      async function loadDonors() {
     try {
-      const response = await donorService.getAllDonors({ limit: 20 });
+      const response = await donorService.getAllDonors({limit: 20 });
       const tbody = document.querySelector('#donorsTable tbody');
       
       tbody.innerHTML = response.data.map(donor => `
-        <tr>
-          <td>${donor.userId.name}</td>
-          <td>${donor.bloodType}</td>
-          <td>${donor.donationHistory.totalDonations}</td>
-          <td>${donor.status}</td>
-          <td>
-            <button onclick="viewDonor('${donor._id}')">View</button>
-            <button onclick="editDonor('${donor._id}')">Edit</button>
-          </td>
-        </tr>
+      <tr>
+        <td>${donor.userId.name}</td>
+        <td>${donor.bloodType}</td>
+        <td>${donor.donationHistory.totalDonations}</td>
+        <td>${donor.status}</td>
+        <td>
+          <button onclick="viewDonor('${donor._id}')">View</button>
+          <button onclick="editDonor('${donor._id}')">Edit</button>
+        </td>
+      </tr>
       `).join('');
     } catch (error) {
-      console.error('Error loading donors:', error);
+        console.error('Error loading donors:', error);
     }
+      loadDonors();
+    </script>
+
   }
-
-  // Load on page load
-  loadDonors();
-</script>
-
-*/

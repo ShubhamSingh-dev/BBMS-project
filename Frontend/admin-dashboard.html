@@ -485,14 +485,14 @@
                 <div class="header-stat">
                     <i class="fas fa-tint"></i>
                     <div class="header-stat-info">
-                        <span class="header-stat-value">116</span>
+                        <span class="header-stat-value" id="stat-total-units">0</span>
                         <span class="header-stat-label">Total Units</span>
                     </div>
                 </div>
                 <div class="header-stat">
                     <i class="fas fa-clock"></i>
                     <div class="header-stat-info">
-                        <span class="header-stat-value">3</span>
+                        <span class="header-stat-value" id="stat-pending">0</span>
                         <span class="header-stat-label">Pending Requests</span>
                     </div>
                 </div>
@@ -506,7 +506,7 @@
                 <div class="header-stat">
                     <i class="fas fa-hand-holding-heart"></i>
                     <div class="header-stat-info">
-                        <span class="header-stat-value">5,247</span>
+                        <span class="header-stat-value" id="stat-donors">0</span>
                         <span class="header-stat-label">Active Donors</span>
                     </div>
                 </div>
@@ -599,12 +599,8 @@
                         <thead>
                             <tr><th>Time</th><th>Event</th><th>Details</th></tr>
                         </thead>
-                        <tbody>
-                            <tr><td>10:30 AM</td><td>🩸 New Donation</td><td>Rajesh K. donated O+ at City Hospital</td></tr>
-                            <tr><td>9:45 AM</td><td>📋 Request Fulfilled</td><td>REQ-2024-00123 completed</td></tr>
-                            <tr><td>9:00 AM</td><td>🏥 Hospital Registered</td><td>Apollo Hospital joined the network</td></tr>
-                            <tr><td>8:15 AM</td><td>👤 New Donor</td><td>Priya S. registered as donor</td></tr>
-                            <tr><td>Yesterday</td><td>🚨 Emergency Request</td><td>Critical O- request fulfilled</td></tr>
+                        <tbody id="adminRequestsBody">
+                            <tr><td colspan="3">Loading recent requests...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -877,5 +873,6 @@
         document.querySelectorAll('.nav-menu a').forEach(link => link.addEventListener('click', () => { navMenu.classList.remove('active'); const icon = hamburger?.querySelector('i'); if(icon) { icon.classList.remove('fa-times'); icon.classList.add('fa-bars'); } }));
         window.addEventListener('click', (e) => { const modal = document.getElementById('emergencyModal'); if(e.target === modal) hideEmergencyModal(); });
     </script>
+    <script src="scripts.js"></script>
 </body>
 </html>

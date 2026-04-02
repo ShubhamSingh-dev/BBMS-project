@@ -3,10 +3,10 @@ import Donor  from '../models/Donor.js';
 
 // @desc    Get all blood inventory
 // @route   GET /api/inventory
-// @access  Private
+// @access  Public
 export const getAllInventory = async (req, res) => {
   try {
-    const { bloodType, status, limit = 20, page = 1 } = req.query;
+    const { bloodType, status, limit = 100, page = 1 } = req.query;
     let query = {};
 
     if (bloodType) query.bloodType = bloodType;
@@ -14,7 +14,7 @@ export const getAllInventory = async (req, res) => {
 
     const skip = (page - 1) * limit;
 
-    const inventory = await BloodInventory.find(query)
+    const items = await BloodInventory.find(query)
       .populate('donorId', 'bloodType phone')
       .skip(skip)
       .limit(parseInt(limit))
@@ -22,13 +22,21 @@ export const getAllInventory = async (req, res) => {
 
     const total = await BloodInventory.countDocuments(query);
 
+    // Grouping by blood type for compatibility with the frontend
+    const inventorySummary = await BloodInventory.aggregate([
+      { $match: { status: status || 'available' } },
+      { $group: { _id: '$bloodType', units: { $sum: '$quantity' } } },
+      { $project: { bloodType: '$_id', units: 1, _id: 0 } },
+    ]);
+
     res.status(200).json({
       success: true,
-      count: inventory.length,
+      count: items.length,
       total,
       page,
       pages: Math.ceil(total / limit),
-      data: inventory,
+      data: items,
+      inventory: inventorySummary,
     });
   } catch (error) {
     res.status(500).json({

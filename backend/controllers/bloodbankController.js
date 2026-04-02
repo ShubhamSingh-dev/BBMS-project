@@ -257,4 +257,30 @@ export const getDashboardSummary = async (req, res) => {
       error: error.message,
     });
   }
+};// @desc    Get admin statistics (for dashboard)
+// @route   GET /api/admin/stats
+// @access  Private
+export const getAdminStats = async (req, res) => {
+  try {
+    const totalDonors = await Donor.countDocuments();
+    const availableUnits = await BloodInventory.countDocuments({ status: 'available' });
+    const pendingRequests = await BloodRequest.countDocuments({ status: 'pending' });
+    const totalHospitals = await User.countDocuments({ role: 'staff' });
+
+    res.status(200).json({
+      success: true,
+      stats: {
+        totalBloodUnits: availableUnits,
+        pendingRequests: pendingRequests,
+        totalDonors: totalDonors,
+        totalHospitals: totalHospitals,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching admin stats',
+      error: error.message,
+    });
+  }
 };

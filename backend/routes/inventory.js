@@ -24,7 +24,7 @@ router.get('/expiry/check', protect, authorize('admin', 'staff'), checkExpiryUni
 
 // @route   GET /api/inventory
 // @desc    Get all blood inventory
-router.get('/', protect, getAllInventory);
+router.get('/', getAllInventory);
 
 // @route   GET /api/inventory/:bloodType
 // @desc    Get inventory by blood type

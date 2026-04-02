@@ -5,10 +5,15 @@ import {
   getBloodBankStats,
   getStorageCapacity,
   getDashboardSummary,
+  getAdminStats,
 } from '../controllers/bloodbankController.js';
 import { protect, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
+
+// @route   GET /api/admin/stats (and /api/bloodbank/)
+// @desc    Get admin statistics
+router.get('/', protect, authorize('admin', 'staff'), getAdminStats);
 
 // @route   GET /api/bloodbank/info
 // @desc    Get blood bank information (Public)

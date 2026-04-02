@@ -890,13 +890,13 @@
             <div class="header-content">
                 <h1>
                     <i class="fas fa-hospital-user"></i>
-                    Welcome back, Jane Doe
+                    Welcome back, <span data-user-name>Jane Doe</span>
                 </h1>
                 <div class="header-subtitle">Manage your health requests and track blood availability here.</div>
                 <div class="header-badges">
-                    <span class="header-badge"><i class="fas fa-tint"></i> Blood Group: A+</span>
+                    <span class="header-badge"><i class="fas fa-tint"></i> Blood Group: <span data-user-blood>A+</span></span>
                     <span class="header-badge"><i class="fas fa-shield-alt"></i> Priority Status</span>
-                    <span class="header-badge"><i class="fas fa-clock"></i> Last Updated: 2 min ago</span>
+                    <span class="header-badge"><i class="fas fa-clock"></i> Last Updated: Just now</span>
                 </div>
             </div>
         </div>
@@ -1015,6 +1015,29 @@
                                     <td><span class="status-badge status-available">Available</span></td>
                                     <td><span class="trend-indicator trend-up"><i class="fas fa-arrow-up"></i> +8</span></td>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- My Blood Requests Section -->
+                <div class="dashboard-card" style="margin-top: 25px;">
+                    <h3><i class="fas fa-clipboard-list"></i> Your Blood Requests</h3>
+                    <div class="data-table" style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #f8f9fa;">
+                                    <th style="padding: 12px; text-align: left;">ID</th>
+                                    <th style="padding: 12px; text-align: left;">Blood Type</th>
+                                    <th style="padding: 12px; text-align: left;">Units</th>
+                                    <th style="padding: 12px; text-align: left;">Urgency</th>
+                                    <th style="padding: 12px; text-align: left;">Status</th>
+                                    <th style="padding: 12px; text-align: left;">Required By</th>
+                                    <th style="padding: 12px; text-align: left;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="myRequestsBody">
+                                <tr><td colspan="7" style="text-align: center; padding: 20px;">Loading your requests...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -1421,5 +1444,6 @@
             });
         });
     </script>
+    <script src="scripts.js"></script>
 </body>
 </html>

@@ -1900,7 +1900,13 @@
                 </div>
             </div>
 
-            <div class="stock-grid" id="stockGrid"></div>
+            <div class="stock-grid" id="stockGrid">
+                <!-- Data will be loaded from scripts.js -->
+                <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i>
+                    <p style="margin-top: 15px;">Loading live blood stock...</p>
+                </div>
+            </div>
 
             <div class="emergency-btn-wrapper">
                 <button class="btn-emergency-large" onclick="showEmergencyModal()">
@@ -2467,5 +2473,6 @@
             initSwiper();
         });
     </script>
+    <script src="scripts.js"></script>
 </body>
 </html>

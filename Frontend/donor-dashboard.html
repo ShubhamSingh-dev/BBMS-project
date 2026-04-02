@@ -772,7 +772,7 @@
         <!-- Welcome Header -->
         <div class="welcome-header">
             <div class="header-content">
-                <h1>Welcome back, Rajesh Kumar! 👋</h1>
+                <h1>Welcome back, <span data-user-name>Rajesh Kumar</span>! 👋</h1>
                 <div class="header-stats">
                     <div class="header-stat">
                         <i class="fas fa-heart"></i>
@@ -791,7 +791,7 @@
                     <div class="header-stat">
                         <i class="fas fa-tint"></i>
                         <div class="header-stat-text">
-                            <strong>O+</strong>
+                            <strong data-user-blood>O+</strong>
                             Blood Type
                         </div>
                     </div>
@@ -984,6 +984,28 @@
                 <i class="fas fa-users"></i>
                 <span>Refer a Friend</span>
                 <small style="font-size: 0.7rem;">Earn Points</small>
+            </div>
+        </div>
+        
+        <!-- Donation History Table -->
+        <div class="dashboard-card" style="margin-top: 30px;">
+            <h3><i class="fas fa-history"></i> Your Donation History</h3>
+            <div class="data-table" style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #f8f9fa;">
+                            <th style="padding: 12px; text-align: left;">Date</th>
+                            <th style="padding: 12px; text-align: left;">Blood Type</th>
+                            <th style="padding: 12px; text-align: left;">Units</th>
+                            <th style="padding: 12px; text-align: left;">Hospital/Center</th>
+                            <th style="padding: 12px; text-align: left;">Status</th>
+                            <th style="padding: 12px; text-align: left;">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myDonationsBody">
+                        <tr><td colspan="6" style="text-align: center; padding: 20px;">Loading your donation history...</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -1319,5 +1341,6 @@
             document.getElementById('donationDate').min = `${yyyy}-${mm}-${dd}`;
         });
     </script>
+    <script src="scripts.js"></script>
 </body>
 </html>
