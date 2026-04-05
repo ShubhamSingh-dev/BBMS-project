@@ -150,14 +150,6 @@ const Signup = () => {
             </div>
           </div>
 
-          <div className="mb-6">
-            <label className="flex items-center gap-2 cursor-pointer relative pl-6">
-              <input type="checkbox" required className="absolute opacity-0 cursor-pointer" />
-              <span className="absolute left-0 h-[18px] w-[18px] bg-[#f0f0f0] rounded-sm"></span>
-              I agree to the <a href="#" className="text-primary hover:underline">Terms & Conditions</a>
-            </label>
-          </div>
-
           <button
             type="submit"
             disabled={loading}
