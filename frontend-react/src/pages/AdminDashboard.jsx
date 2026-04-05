@@ -22,9 +22,9 @@ const AdminDashboard = () => {
         requestService.getAll(),
         inventoryService.get()
       ]);
-      setStats(statsData.stats);
-      setRequests(reqData.requests);
-      setInventory(invData.inventory);
+      setStats(statsData.stats || {});
+      setRequests(reqData.data || []);
+      setInventory(invData.inventory || []);
     } catch (err) {
       console.error(err.message);
     } finally {
@@ -48,7 +48,7 @@ const AdminDashboard = () => {
         <div className="max-w-[1400px] mx-auto">
           <div className="flex justify-between items-center mb-10">
             <div>
-              <h1 className="text-3xl font-extrabold font-clash mb-2">Admin Control Center | {user?.fullname}</h1>
+              <h1 className="text-3xl font-extrabold font-clash mb-2">Admin Control Center | {user?.name}</h1>
               <p className="text-gray">Manage requests and monitor life-saving resources.</p>
             </div>
             <button onClick={logout} className="px-6 py-2.5 bg-white border-2 border-primary text-primary font-semibold rounded-[50px] transition-all hover:bg-linear-to-br hover:from-primary hover:to-primary-light hover:text-white hover:border-transparent">Logout</button>

@@ -29,8 +29,8 @@ const PatientDashboard = () => {
         requestService.getMyRequests(),
         inventoryService.get()
       ]);
-      setRequests(reqData.requests);
-      setInventory(invData.inventory);
+      setRequests(reqData.requests || []);
+      setInventory(invData.inventory || []);
     } catch (err) {
       console.error(err.message);
     } finally {
@@ -55,7 +55,7 @@ const PatientDashboard = () => {
         doctorName: formData.reqDoctor,
         contactNumber: formData.reqContact
       });
-      alert(`Request submitted! ID: ${data.request.requestId} 📋`);
+      alert(`Request submitted! 📋`);
       setFormData({
         reqBloodType: '',
         reqUnits: 1,
@@ -89,7 +89,7 @@ const PatientDashboard = () => {
         <div className="max-w-[1400px] mx-auto">
           <div className="flex justify-between items-center mb-10">
             <div>
-              <h1 className="text-3xl font-extrabold font-clash mb-2">Patient Portal | {user?.fullname}</h1>
+              <h1 className="text-3xl font-extrabold font-clash mb-2">Patient Portal | {user?.name}</h1>
               <p className="text-gray">Request blood and track your status.</p>
             </div>
             <button onClick={logout} className="px-6 py-2.5 bg-white border-2 border-primary text-primary font-semibold rounded-[50px] transition-all hover:bg-linear-to-br hover:from-primary hover:to-primary-light hover:text-white hover:border-transparent">Logout</button>

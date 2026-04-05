@@ -11,6 +11,7 @@ const DonorDashboard = () => {
     hospital: '',
     units: 1,
     donationDate: '',
+    bloodType: '',
     weight: '',
     notes: ''
   });
@@ -39,11 +40,11 @@ const DonorDashboard = () => {
     try {
       await donationService.create({
         ...formData,
-        bloodType: user.bloodType,
+        bloodType: formData.bloodType || user?.bloodType,
         donationDate: formData.donationDate || new Date().toISOString()
       });
       alert('Donation scheduled successfully! 🩸');
-      setFormData({ hospital: '', units: 1, donationDate: '', weight: '', notes: '' });
+      setFormData({ hospital: '', units: 1, donationDate: '', bloodType: '', weight: '', notes: '' });
       fetchDonations();
     } catch (err) {
       alert(err.message);
@@ -56,7 +57,7 @@ const DonorDashboard = () => {
         <div className="max-w-[1400px] mx-auto">
           <div className="flex justify-between items-center mb-10">
             <div>
-              <h1 className="text-3xl font-extrabold font-clash mb-2">Welcome back, {user?.fullname}! 👋</h1>
+              <h1 className="text-3xl font-extrabold font-clash mb-2">Welcome back, {user?.name}! 👋</h1>
               <p className="text-gray">Manage your donations and see your impact.</p>
             </div>
             <button onClick={logout} className="px-6 py-2.5 bg-white border-2 border-primary text-primary font-semibold rounded-[50px] transition-all hover:bg-linear-to-br hover:from-primary hover:to-primary-light hover:text-white hover:border-transparent">Logout</button>
@@ -85,6 +86,13 @@ const DonorDashboard = () => {
               <div className="bg-white p-8 rounded-[30px] shadow-md">
                 <h3 className="text-xl font-bold mb-6 font-clash">Schedule Donation</h3>
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="block mb-2 text-sm font-medium">Blood Type</label>
+                    <select name="bloodType" required value={formData.bloodType} onChange={handleChange} className="w-full p-3 border border-[#f0f0f0] rounded-xl focus:outline-none focus:border-primary appearance-none">
+                      <option value="">Select Blood Type</option>
+                      {['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'].map(t => <option key={t} value={t}>{t}</option>)}
+                    </select>
+                  </div>
                   <div>
                     <label className="block mb-2 text-sm font-medium">Preferred Hospital</label>
                     <input type="text" name="hospital" required value={formData.hospital} onChange={handleChange} placeholder="Hospital name" className="w-full p-3 border border-[#f0f0f0] rounded-xl focus:outline-none focus:border-primary" />

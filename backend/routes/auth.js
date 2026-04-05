@@ -54,7 +54,7 @@ router.post(
       };
 
       user = new User({
-        name: fullname || name,
+        name: fullname,
         email,
         password,
         phone,
