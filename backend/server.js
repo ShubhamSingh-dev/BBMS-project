@@ -1,5 +1,9 @@
 import dotenv from 'dotenv';
+import dns from 'dns';
 dotenv.config();
+
+// Fixes ECONNREFUSED on some systems for MongoDB SRV
+dns.setDefaultResultOrder('ipv4first');
 
 // Guard must be FIRST
 if (!process.env.JWT_SECRET) {
